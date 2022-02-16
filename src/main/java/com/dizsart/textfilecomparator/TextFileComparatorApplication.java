@@ -1,0 +1,13 @@
+package com.dizsart.textfilecomparator;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class TextFileComparatorApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TextFileComparatorApplication.class, args);
+    }
+
+}
