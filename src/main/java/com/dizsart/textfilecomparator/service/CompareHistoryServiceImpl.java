@@ -1,18 +1,38 @@
 package com.dizsart.textfilecomparator.service;
 
+import com.dizsart.textfilecomparator.model.CompareHistory;
 import com.dizsart.textfilecomparator.model.UploadFile;
+import com.dizsart.textfilecomparator.repository.CompareHistoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.Principal;
 import java.util.*;
 
 @Service
 public class CompareHistoryServiceImpl implements CompareHistoryService{
 
-public static Set<String> getSetForTextFile (String file) {
+    private CompareHistoryRepository compareHistoryRepository;
+
+    @Autowired
+    public CompareHistoryServiceImpl(CompareHistoryRepository compareHistoryRepository) {
+        this.compareHistoryRepository = compareHistoryRepository;
+    }
+
+    @Cacheable("compareHistories")
+    public Optional<CompareHistory> findAllHistories(User principal){
+        Optional<CompareHistory>  compareHistory = compareHistoryRepository.findAllByLecturersUsername(principal.getUsername());
+        return compareHistory;
+    }
+
+
+    public static Set<String> getSetForTextFile (String file) {
     Set<String> set;
     set = new HashSet<>(Arrays.asList(file.split("[$&+,:;=?@#|'<>.^*()%!-]")));
     return set;

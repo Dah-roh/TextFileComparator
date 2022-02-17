@@ -5,6 +5,7 @@ import com.dizsart.textfilecomparator.model.UploadFile;
 import com.dizsart.textfilecomparator.repository.CompareHistoryRepository;
 import com.dizsart.textfilecomparator.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +29,7 @@ public class FileServiceImpl implements FileService{
         this.compareHistoryService = compareHistoryService;
     }
 
-    public void save(MultipartFile[] file, String userName, String[] studentDTO) throws IOException {
+    public Map<String, String> save(MultipartFile[] file, String userName, String[] studentDTO) throws IOException {
         List<UploadFile> uploadedFiles =  new ArrayList<>();
         for (MultipartFile uploadFile: file) {
             UploadFile fileToUpload = new UploadFile();
@@ -42,19 +43,17 @@ public class FileServiceImpl implements FileService{
             count++;
         }
         var results = compareHistoryService.compareTextFiles(file);
-        System.out.println(results);
         compareHistory.setFiles(uploadedFiles);
         compareHistory.setPercentageResults(results.get("Percentage"));
         compareHistory.setSimilaritiesResults(results.get("Similarities"));
         compareHistory.setLecturersUsername(userName);
-        compareHistoryRepository.save(compareHistory);
+        this.saveHistory(compareHistory);
+        return results;
     }
 
-    public Optional<UploadFile> getFile(Long id) {
-        return fileRepository.findById(id);
+    @CachePut("compareHistories")
+    public CompareHistory saveHistory(CompareHistory compareHistory){
+        return compareHistoryRepository.save(compareHistory);
     }
 
-    public List<UploadFile> getAllFiles() {
-        return fileRepository.findAll();
-    }
 }
