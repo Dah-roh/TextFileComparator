@@ -1,8 +1,6 @@
 package com.dizsart.textfilecomparator.controller;
 
 import com.dizsart.textfilecomparator.model.CompareHistory;
-import com.dizsart.textfilecomparator.model.StudentDTO;
-import com.dizsart.textfilecomparator.model.UserDao;
 import com.dizsart.textfilecomparator.repository.CompareHistoryRepository;
 import com.dizsart.textfilecomparator.service.CompareHistoryService;
 import com.dizsart.textfilecomparator.service.FileService;
