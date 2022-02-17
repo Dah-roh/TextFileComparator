@@ -2,7 +2,6 @@ package com.dizsart.textfilecomparator.controller;
 
 import com.dizsart.textfilecomparator.config.JwtTokenUtil;
 import com.dizsart.textfilecomparator.model.JwtRequest;
-import com.dizsart.textfilecomparator.model.JwtResponse;
 import com.dizsart.textfilecomparator.model.UserDto;
 import com.dizsart.textfilecomparator.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

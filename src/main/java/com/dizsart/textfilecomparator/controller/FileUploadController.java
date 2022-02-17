@@ -11,8 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -35,12 +33,12 @@ public class FileUploadController {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userName = principal.getUsername();
         try {
-            fileService.save(file, userName, studentNames);
+            Map<String, String> results = fileService.save(file, userName, studentNames);
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(String.format("Files uploaded successfully: %s, %s", file[0].getOriginalFilename(), file[1].getOriginalFilename()));
+                    .body(String.format("Files uploaded successfully: %s, %s\n, %s", file[0].getOriginalFilename(), file[1].getOriginalFilename(), results));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(String.format("Could not upload the files: %s!", file[0].getOriginalFilename()+" "+file[1].getOriginalFilename()));
+                    .body(String.format("Could not upload the files: %s, %s!", file[0].getOriginalFilename(),file[1].getOriginalFilename()));
         }
     }
 
@@ -54,8 +52,7 @@ public class FileUploadController {
     @GetMapping("/history")
     public ResponseEntity<?> viewHistory () {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<CompareHistory>  compareHistory = compareHistoryRepository.findAllByLecturersUsername(principal.getUsername());
-        return ResponseEntity.status(HttpStatus.OK).body(compareHistory);
+        return ResponseEntity.status(HttpStatus.OK).body(compareHistoryService.findAllHistories(principal));
 
     }
 
