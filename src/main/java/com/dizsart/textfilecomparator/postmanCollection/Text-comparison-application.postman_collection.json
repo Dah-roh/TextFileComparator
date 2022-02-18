@@ -1,0 +1,214 @@
+{
+	"info": {
+		"_postman_id": "ecce5693-bbcd-46b7-9044-323541713eb1",
+		"name": "Text-comparison-application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"dizsart\",\n    \"password\":\"sqhooops\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://text-file-comparator.herokuapp.com/register",
+					"protocol": "https",
+					"host": [
+						"text-file-comparator",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"register"
+					]
+				},
+				"description": "Endpoint for registering users"
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticate",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaXpzYXJ0IiwiZXhwIjoxNjQ1MTY0NDIxLCJpYXQiOjE2NDUxNDY0MjF9.2B9MpbPuGvfqkP0y1qoNnnuCyF0oXg7cPgmL15J-sj05Uz1fCqHUVE4pZVn-4orJpCU_Zmbv6K_ZudqSNK-nAw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"dizsart\",\n    \"password\":\"sqhooops\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://text-file-comparator.herokuapp.com/authenticate",
+					"protocol": "https",
+					"host": [
+						"text-file-comparator",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"authenticate"
+					]
+				},
+				"description": "Endpoint to authenticate and log user in"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload and Compare",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaXpzYXJ0IiwiZXhwIjoxNjQ1MTg0NzMxLCJpYXQiOjE2NDUxNjY3MzF9.plYND_zEPXpG2N_isVcUBip683JW8W-ndNcm8Hrab4SdpVy0PVLs-SO49iOhT2GTizuQOdSaRkR0NXQlM6auZQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": [
+								"/Users/gadibia/Downloads/text-D85CFAB6E9A9-1.txt",
+								"/Users/gadibia/Downloads/101 Essays That Will Change the Way You Think by Brianna Wiest PDF/free audiobook version copy.txt"
+							]
+						},
+						{
+							"key": "students",
+							"value": "victory, hassan",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://text-file-comparator.herokuapp.com/files",
+					"protocol": "https",
+					"host": [
+						"text-file-comparator",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"files"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "students",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": "Endpoint to upload and compare text files"
+			},
+			"response": []
+		},
+		{
+			"name": "Rerun History",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaXpzYXJ0IiwiZXhwIjoxNjQ1MTg0NzMxLCJpYXQiOjE2NDUxNjY3MzF9.plYND_zEPXpG2N_isVcUBip683JW8W-ndNcm8Hrab4SdpVy0PVLs-SO49iOhT2GTizuQOdSaRkR0NXQlM6auZQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://text-file-comparator.herokuapp.com/rerun/1",
+					"protocol": "https",
+					"host": [
+						"text-file-comparator",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rerun",
+						"1"
+					]
+				},
+				"description": "Endpoint to rerun histories"
+			},
+			"response": []
+		},
+		{
+			"name": "View history",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaXpzYXJ0IiwiZXhwIjoxNjQ1MTg1ODI2LCJpYXQiOjE2NDUxNjc4MjZ9.nJ56PgkV1yrVbWFl4h0xH53QhLnPgitjzaNDu6o_a85NvNT4zI50sIM1DtFOTInLwgXrDSEstQpTb7QZ4seVEA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://text-file-comparator.herokuapp.com/history",
+					"protocol": "https",
+					"host": [
+						"text-file-comparator",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"history"
+					]
+				},
+				"description": "Endpoint to view all compare histories"
+			},
+			"response": []
+		}
+	]
+}
