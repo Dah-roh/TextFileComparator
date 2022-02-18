@@ -11,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,7 +54,7 @@ public class FileUploadController {
     @GetMapping("/history")
     public ResponseEntity<?> viewHistory () {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<CompareHistory>  compareHistory = compareHistoryRepository.findAllByLecturersUsername(principal.getUsername());
+        List<CompareHistory> compareHistory = compareHistoryRepository.findAllByLecturersUsername(principal.getUsername());
         return ResponseEntity.status(HttpStatus.OK).body(compareHistory);
 
     }

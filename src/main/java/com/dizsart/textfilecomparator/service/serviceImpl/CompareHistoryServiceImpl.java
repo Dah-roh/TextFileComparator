@@ -55,8 +55,8 @@ public class CompareHistoryServiceImpl implements CompareHistoryService {
     }
     @Cacheable("compareHistories")
     @Override
-    public Optional<CompareHistory> findAllHistories(User principal) {
-        return Optional.empty();
+    public List<CompareHistory> findAllHistories(User principal) {
+        return compareHistoryRepository.findAllByLecturersUsername(principal.getUsername());
     }
 
     @Override
