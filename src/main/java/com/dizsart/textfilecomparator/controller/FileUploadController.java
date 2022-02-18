@@ -33,7 +33,7 @@ public class FileUploadController {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userName = principal.getUsername();
         try {
-            Map<String, String> results = fileService.save(file, userName, studentNames);
+            var results = fileService.save(file, userName, studentNames);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(String.format("Files uploaded successfully: %s, %s\n, %s", file[0].getOriginalFilename(), file[1].getOriginalFilename(), results));
         } catch (Exception e) {
@@ -52,7 +52,8 @@ public class FileUploadController {
     @GetMapping("/history")
     public ResponseEntity<?> viewHistory () {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ResponseEntity.status(HttpStatus.OK).body(compareHistoryService.findAllHistories(principal));
+        Optional<CompareHistory>  compareHistory = compareHistoryRepository.findAllByLecturersUsername(principal.getUsername());
+        return ResponseEntity.status(HttpStatus.OK).body(compareHistory);
 
     }
 

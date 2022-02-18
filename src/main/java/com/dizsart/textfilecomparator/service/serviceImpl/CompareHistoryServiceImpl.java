@@ -1,9 +1,11 @@
-package com.dizsart.textfilecomparator.service;
+package com.dizsart.textfilecomparator.service.serviceImpl;
 
 import com.dizsart.textfilecomparator.model.CompareHistory;
 import com.dizsart.textfilecomparator.model.UploadFile;
 import com.dizsart.textfilecomparator.repository.CompareHistoryRepository;
+import com.dizsart.textfilecomparator.service.CompareHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
@@ -16,19 +18,13 @@ import java.security.Principal;
 import java.util.*;
 
 @Service
-public class CompareHistoryServiceImpl implements CompareHistoryService{
+public class CompareHistoryServiceImpl implements CompareHistoryService {
 
     private CompareHistoryRepository compareHistoryRepository;
 
     @Autowired
     public CompareHistoryServiceImpl(CompareHistoryRepository compareHistoryRepository) {
         this.compareHistoryRepository = compareHistoryRepository;
-    }
-
-    @Cacheable("compareHistories")
-    public Optional<CompareHistory> findAllHistories(User principal){
-        Optional<CompareHistory>  compareHistory = compareHistoryRepository.findAllByLecturersUsername(principal.getUsername());
-        return compareHistory;
     }
 
 
@@ -56,6 +52,17 @@ public class CompareHistoryServiceImpl implements CompareHistoryService{
             sets.add(getSetForTextFile(new String(file.getContent(), StandardCharsets.UTF_8)));
         });
         return getMapResults(sets, results);
+    }
+    @Cacheable("compareHistories")
+    @Override
+    public Optional<CompareHistory> findAllHistories(User principal) {
+        return Optional.empty();
+    }
+
+    @Override
+    @CachePut("compareHistories")
+    public void save(CompareHistory compareHistory) {
+        compareHistoryRepository.save(compareHistory);
     }
 
     private Map<String, String> getMapResults(List<Set<String>> sets, Map<String, String> results) {

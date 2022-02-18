@@ -14,4 +14,6 @@ public interface CompareHistoryService {
     Map<String, String> compareTextFiles(MultipartFile[] filePaths) throws IOException;
     Map<String,String> rerun(List<UploadFile> files);
     Optional<CompareHistory> findAllHistories(User principal);
+
+    void save(CompareHistory compareHistory);
 }
